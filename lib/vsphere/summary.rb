@@ -53,11 +53,53 @@ module VSphere
     end
 
     def summary=(hash)
-      raise ArgumntError, 'Summery must be hash' unless hash.is_a? Hash
+      raise ArgumentError, 'Summery must be hash' unless hash.is_a? Hash
       hash.select!{ |k,v| self.class.available_fields.include? k }
       @summary = OpenStruct.new hash
     end
 
+    def extract_summary(subject)
+      filterSpec = RbVmomi::VIM.PropertyFilterSpec(
+      :objectSet => [{
+        :obj => subject,
+        :selectSet => [
+          RbVmomi::VIM.TraversalSpec(
+            :name => 'tsHosts',
+            :type => subject.class_name,
+            :path => 'host',
+            :skip => false
+          )
+        ]
+      }],
+      :propSet => [{
+        :pathSet => %w(parent name overallStatus summary.hardware.cpuMhz
+                    summary.hardware.numCpuCores summary.hardware.memorySize
+                    summary.quickStats.overallCpuUsage
+                    summary.quickStats.overallMemoryUsage),
+              :type => 'HostSystem'
+            }]
+          )
+      # http://grepcode.com/file/repo1.maven.org/maven2/net.java.dev.vcc.thirdparty/vi-api/4.0.0-4/com/vmware/vim/HostHardwareSummary.java#HostHardwareSummary
+      #http://grepcode.com/file/repo1.maven.org/maven2/net.java.dev.vcc.thirdparty/vi-api/4.0.0-4/com/vmware/vim/HostListSummaryQuickStats.java#HostListSummaryQuickStats.0overallMemoryUsage
 
+      vim.propertyCollector.RetrieveProperties(specSet: [filterSpec])
+
+      stats = {
+        :totalCPU => 0,
+        :totalMem => 0,
+        :usedCPU => 0,
+        :usedMem => 0,
+      }
+
+      result.each do |x|
+        next if x['overallStatus'] == 'red'
+        stats[:totalCPU] += x['summary.hardware.cpuMhz'] * x['summary.hardware.numCpuCores']
+        stats[:totalMem] += x['summary.hardware.memorySize'] / (1024*1024)
+        stats[:usedCPU] += x['summary.quickStats.overallCpuUsage'] || 0
+        stats[:usedMem] += x['summary.quickStats.overallMemoryUsage'] || 0
+      end
+
+      stats
+    end
   end
 end
