@@ -2,15 +2,18 @@ require 'rbvmomi'
 require_relative 'lib/vsphere.rb'
 
 vim = RbVmomi::VIM.connect(host: "10.75.11.202", user: 'svc-vmcreator', password: 'O5ZkSFQ8b8gP', insecure: true)
-c = VCenter.new(vim)
-# p c.summary.memory_stats
-# p c.summary.cpu_frequency_stats
-# p c.summary.storage_stats
-# p "_"*100
-# p c.host_list[4].summary.memory_stats
-# p c.host_list[4].summary.cpu_frequency_stats
+c = VSphere::VCenter.new(vim)
+p c.summary.memory_stats
+p c.summary.cpu_frequency_stats
+p c.summary.storage_stats
+p "_"*100
+p c.host_list[1].name
+p c.host_list[1].summary.memory_stats
+p c.host_list[1].summary.cpu_frequency_stats
+p c.host_list[1].summary.storage_stats
+p c.host_list[1].datastores.size
 
-p c.host_list.map{|x| x.summary.total_memory}
+# p c.host_list.map{|x| x.summary.total_memory}
 
 
   # attr_reader :connection_options
