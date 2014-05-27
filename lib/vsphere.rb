@@ -1,3 +1,6 @@
 require_relative 'vsphere/displayable.rb'
 require_relative 'vsphere/conversions.rb'
 require_relative 'vsphere/vcenter.rb'
+require_relative 'vsphere/datastore_summary.rb'
+require_relative 'vsphere/host_summary.rb'
+require_relative 'vsphere/datacenter_summary.rb'

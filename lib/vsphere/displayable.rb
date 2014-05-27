@@ -15,7 +15,7 @@ module VSphere
     end
 
     def storage_stats
-      { total: capacity, used: used_space}
+      { total: capacity, used: capacity - free_space}
     end
 
   end

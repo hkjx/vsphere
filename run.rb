@@ -3,15 +3,39 @@ require_relative 'lib/vsphere.rb'
 
 vim = RbVmomi::VIM.connect(host: "10.75.11.202", user: 'svc-vmcreator', password: 'O5ZkSFQ8b8gP', insecure: true)
 c = VSphere::VCenter.new(vim)
-p c.summary.memory_stats
-p c.summary.cpu_frequency_stats
-p c.summary.storage_stats
-p "_"*100
-p c.host_list[1].name
-p c.host_list[1].summary.memory_stats
-p c.host_list[1].summary.cpu_frequency_stats
-p c.host_list[1].summary.storage_stats
-p c.host_list[1].datastores.size
+
+s = VSphere::DatacenterSummaryFactory.create(c)
+p s
+s = VSphere::DatastoreSummaryFactory.create(c)
+p s.storage_stats
+
+host = c.host_list[1]
+
+s = VSphere::DatastoreSummaryFactory.create(host)
+p s.storage_stats
+
+
+# s = VSphere::HostSummary.new(host.instance_variable_get(:@host))
+# p s.me.total_cpu
+# p s.me.total_memory
+# p s.me.used_cpu
+# p s.me.used_memory
+
+store = host.datastores.first
+d = VSphere::DatastoreSummaryFactory.create(store)
+p d.storage_stats
+
+# p VSphere::Summary.extract_summary(host.instance_variable_get(:@host))
+
+# p c.summary.memory_stats
+# p c.summary.cpu_frequency_stats
+# p c.summary.storage_stats
+# p "_"*100
+# p c.host_list[1].name
+# p c.host_list[1].summary.memory_stats
+# p c.host_list[1].summary.cpu_frequency_stats
+# p c.host_list[1].summary.storage_stats
+# p c.host_list[1].datastores.size
 
 # p c.host_list.map{|x| x.summary.total_memory}
 

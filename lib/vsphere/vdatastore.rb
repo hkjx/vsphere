@@ -5,8 +5,8 @@ module VSphere
     attr_reader :summary
 
     def initialize(instance)
-      @datastore = instance
-      @summary = VSphere::Conversions::Summary @datastore
+      @instance = instance
+      # @summary = VSphere::Conversions::Summary @datastore
     end
 
     def name
