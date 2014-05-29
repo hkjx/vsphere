@@ -9,7 +9,7 @@ module VSphere
 
       def make_struct
         if subject.is_a? RbVmomi::VIM::Datastore
-          OpenStruct.new({capacity: subject.summary.capacity, free_space: subject.summary.freeSpace})
+          VSphere::Summary.new({capacity: subject.summary.capacity, free_space: subject.summary.freeSpace})
         else
           super
         end

@@ -1,4 +1,5 @@
 require_relative './vhost.rb'
+require_relative './summary_factory.rb'
 require_relative './summary.rb'
 require_relative './vdatastore.rb'
 

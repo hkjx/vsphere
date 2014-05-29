@@ -1,29 +1,26 @@
 require 'rbvmomi'
 require_relative 'lib/vsphere.rb'
 
-vim = RbVmomi::VIM.connect(host: "10.75.11.202", user: 'svc-vmcreator', password: 'O5ZkSFQ8b8gP', insecure: true)
-c = VSphere::VCenter.new(vim)
 
-s = VSphere::DatacenterSummaryFactory.create(c)
-p s
-s = VSphere::DatastoreSummaryFactory.create(c)
-p s.storage_stats
+a = VSphere::Summary.new(a: 1, b: 2)
+p a.a
+p a.b
+# vim = RbVmomi::VIM.connect(host: "10.75.11.202", user: 'svc-vmcreator', password: 'O5ZkSFQ8b8gP', insecure: true)
+# c = VSphere::VCenter.new(vim)
 
-host = c.host_list[1]
+# s = VSphere::DatacenterSummaryFactory.create(c)
+# p s
+# s = VSphere::DatastoreSummaryFactory.create(c)
+# p s.storage_stats
 
-s = VSphere::DatastoreSummaryFactory.create(host)
-p s.storage_stats
+# host = c.host_list[1]
 
+# s = VSphere::DatastoreSummaryFactory.create(host)
+# p s.storage_stats
 
-# s = VSphere::HostSummary.new(host.instance_variable_get(:@host))
-# p s.me.total_cpu
-# p s.me.total_memory
-# p s.me.used_cpu
-# p s.me.used_memory
-
-store = host.datastores.first
-d = VSphere::DatastoreSummaryFactory.create(store)
-p d.storage_stats
+# store = host.datastores.first
+# d = VSphere::DatastoreSummaryFactory.create(store)
+# p d.storage_stats
 
 # p VSphere::Summary.extract_summary(host.instance_variable_get(:@host))
 

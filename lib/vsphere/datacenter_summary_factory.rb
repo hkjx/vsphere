@@ -15,12 +15,10 @@ module VSphere
         result_hash = HostSummaryFactory.send(:stats)
 
         array.each do |x|
-          result_hash.keys.each do |key|
-            result_hash[key] += x[key]
-          end
+          result_hash.keys.each { |key| result_hash[key] += x[key] }
         end
 
-        OpenStruct.new result_hash
+        VSphere::Summary.new result_hash
       end
 
     end
