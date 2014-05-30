@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module VSphere
   class SummaryFactory
     include VSphere::Displayable
@@ -25,7 +23,7 @@ module VSphere
       end
 
       def filter_spec(object_set, properties_set)
-        RbVmomi::VIM.PropertyFilterSpec(:objectSet => object_set, :propSet =>   properties_set)
+        RbVmomi::VIM.PropertyFilterSpec(:objectSet => object_set, :propSet => properties_set)
       end
 
       def as_hash(result)

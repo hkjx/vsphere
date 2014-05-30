@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module VSphere
   class DatacenterSummaryFactory < SummaryFactory
 
@@ -8,17 +6,14 @@ module VSphere
     class << self
 
       def make_struct
-        host_lists = instance.host_list
+        p @instance.class
+        p @instance.name
+        # p instance.host_list.map(&:class)
+        # clasters_summary    = Conversions::Summary(instance.host_list).inject(&:+)
+        # p clasters_summary
+        # datastores_summary  = Conversions::Summary(instance)
+        # general_summary     = clasters_summary + datastores_summary
 
-        array = host_lists.inject([]) { |array, host| array << HostSummaryFactory.create(host).marshal_dump }
-
-        result_hash = HostSummaryFactory.send(:stats)
-
-        array.each do |x|
-          result_hash.keys.each { |key| result_hash[key] += x[key] }
-        end
-
-        VSphere::Summary.new result_hash
       end
 
     end

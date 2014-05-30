@@ -11,7 +11,7 @@ module VSphere
     end
 
     def cpu_frequency_stats
-      { total: total_cpu_frequency, used: used_cpu_frequency, free: total_cpu_frequency - used_cpu_frequency }
+      { total: total_cpu, used: used_cpu, free: total_cpu_frequency - used_cpu_frequency }
     end
 
     def storage_stats

@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module VSphere
   class DatastoreSummaryFactory < SummaryFactory
 
