@@ -1,6 +1,6 @@
 module VSphere
   class Summary
-
+    include Displayable
     def initialize(hash)
       generate_methods hash
       @hash = hash

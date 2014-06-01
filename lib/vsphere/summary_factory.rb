@@ -1,12 +1,12 @@
 module VSphere
   class SummaryFactory
-    include VSphere::Displayable
-    singleton_class.instance_exec{ attr_accessor :subject, :instance }
+    singleton_class.instance_exec{ attr_accessor :subject }
 
     def self.create(subject)
-      self.instance = subject
-      self.subject = subject.instance_variable_get(:@instance)
-      make_struct.tap { |x| x.instance_exec{ extend VSphere::Displayable } }
+      return VSphere::Summary.new({}) if subject.nil?
+
+      @subject = subject
+      make_struct
     end
 
   private

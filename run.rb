@@ -3,11 +3,16 @@ require_relative 'lib/vsphere.rb'
 
 vim = RbVmomi::VIM.connect(host: "10.75.11.202", user: 'svc-vmcreator', password: 'O5ZkSFQ8b8gP', insecure: true)
 c = VSphere::VCenter.new(vim)
+p c.summary.memory_stats
+p c.summary.cpu_cores_stats
+p c.summary.cpu_stats
+p c.summary.storage_stats
 
-p c.summary#.memory_stats
-# p c.summary.cpu_frequency_stats
-# p c.summary.storage_stats
-
+p "_"*100
+p c.host_list[1].name
+p c.host_list[1].summary.memory_stats
+p c.host_list[1].summary.cpu_stats
+p c.host_list[1].summary.storage_stats
 # s = VSphere::DatacenterSummaryFactory.create(c)
 # p s
 # s = VSphere::DatastoreSummaryFactory.create(c)

@@ -7,7 +7,7 @@ module VSphere
     def initialize(instance)
       super instance
       @datastores = Datastore(@instance.datastore)
-      @summary = Summary self
+      @summary = Summary(instance) + Summary(datastores)
     end
 
   end

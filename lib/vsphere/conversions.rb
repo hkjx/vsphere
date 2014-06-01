@@ -22,11 +22,17 @@ module VSphere
 
     def Summary(arg)
       case arg
+      when nil                                    then arg VSphere::SummaryFactory.create(nil)
       when VSphere::Summary                       then arg
-      when VSphere::VCluster                      then VSphere::ClusterSummaryFactory.create(arg)
-      when VSphere::VDatastore                    then VSphere::DatastoreSummaryFactory.create(arg)
-      when VSphere::VCenter                       then VSphere::DatacenterSummaryFactory.create(arg)
-      when Array                                  then arg.map{ |x| send __method__, x }
+      when VSphere::VCluster                      then arg.summary
+      when VSphere::VDatastore                    then arg.summary
+      when VSphere::VCenter                       then arg.summary
+
+      when RbVmomi::VIM::ClusterComputeResource   then VSphere::ClusterSummaryFactory.create(arg)
+      when RbVmomi::VIM::Datastore                then VSphere::DatastoreSummaryFactory.create(arg)
+      when RbVmomi::VIM::Datacenter               then VSphere::DatacenterSummaryFactory.create(arg)
+      when Array
+        arg.map{ |x| send __method__, x }.inject(&:+) || VSphere::SummaryFactory.create(nil)
       else raise TypeError, "can't convert #{arg} into Summary"
       end
     end

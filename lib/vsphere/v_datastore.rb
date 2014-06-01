@@ -4,7 +4,7 @@ module VSphere
 
     def initialize(instance)
       super(instance)
-      @summary = Summary self
+      @summary = Summary instance
     end
 
   end

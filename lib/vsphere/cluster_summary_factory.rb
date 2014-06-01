@@ -4,7 +4,6 @@ module VSphere
     def self.make_struct
       summary = super
       summary.add_property!({:cpu_cores_number => subject.summary.numCpuCores })
-      summary
     end
 
   private

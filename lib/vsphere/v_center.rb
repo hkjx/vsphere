@@ -7,8 +7,7 @@ module VSphere
       @vim        = vim
       @instance   = @vim.serviceInstance.find_datacenter
       @host_list  = Host(datacenter.hostFolder.children)
-      # @datastores = Datastore(datacenter.datastore)
-      @summary    = Summary self
+      @summary    = Summary host_list
     end
 
     def datacenter
