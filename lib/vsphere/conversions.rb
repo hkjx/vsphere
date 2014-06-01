@@ -30,7 +30,6 @@ module VSphere
 
       when RbVmomi::VIM::ClusterComputeResource   then VSphere::ClusterSummaryFactory.create(arg)
       when RbVmomi::VIM::Datastore                then VSphere::DatastoreSummaryFactory.create(arg)
-      when RbVmomi::VIM::Datacenter               then VSphere::DatacenterSummaryFactory.create(arg)
       when Array
         arg.map{ |x| send __method__, x }.inject(&:+) || VSphere::SummaryFactory.create(nil)
       else raise TypeError, "can't convert #{arg} into Summary"

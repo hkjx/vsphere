@@ -13,6 +13,11 @@ p c.host_list[1].name
 p c.host_list[1].summary.memory_stats
 p c.host_list[1].summary.cpu_stats
 p c.host_list[1].summary.storage_stats
+
+p "_"*100
+p c.host_list[1].datastores[1].name
+p c.host_list[1].datastores[1].summary
+
 # s = VSphere::DatacenterSummaryFactory.create(c)
 # p s
 # s = VSphere::DatastoreSummaryFactory.create(c)
